@@ -1,9 +1,10 @@
-FROM python:3.8
+FROM continuumio/miniconda3
 
-RUN mkdir /code
-WORKDIR /code
-ADD . /code/
+RUN mkdir /project
+WORKDIR /project
+ADD . /project/
 RUN pip install -r requirements.txt
+RUN python -m pytest tests/
 
 EXPOSE 5000
-CMD ["python", "/code/app.py"]
+CMD ["python", "/project/src/app.py"]
