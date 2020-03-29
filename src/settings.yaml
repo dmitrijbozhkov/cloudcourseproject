@@ -1,0 +1,31 @@
+# Debug options
+debug: True
+
+# Auth
+roles:
+  - User
+  - Admin
+
+default_admin:
+  username: admin
+  password: pass1234
+
+JWT_SECRET_KEY: super-secret
+JWT_ACCESS_TOKEN_EXPIRES: 3 # days
+
+GOOGLE_OAUTH_CLIENT_ID: 133327998613-juq8m628rd3enacrrf21gpki7tog7mm0.apps.googleusercontent.com
+GOOGLE_OAUTH_CLIENT_SECRET: 53g8FKO6Qaa_-TVcTLm-DoIV
+USER_INFO: /oauth2/v1/userinfo
+SESSION_TOKEN: token
+SESSION_TYPE: filesystem
+SECRET_KEY: flask-key
+
+# Database
+SQLALCHEMY_DATABASE_URI: sqlite:////tmp/test.db
+SQLALCHEMY_TRACK_MODIFICATIONS: False
+
+# Celery
+CELERY_BROKER_URL: redis://localhost:6379/0
+CELERY_RESULT_BACKEND: redis://localhost:6379/0
+REDIS_URL: redis://localhost:6379/0
+CELERY_IGNORE_RESULT: False

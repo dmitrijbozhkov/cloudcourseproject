@@ -1,0 +1,9 @@
+{% extends "main.jinja" %}
+{% from "article_list.jinja" import articles with context %}
+{% block title %}Main page{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="title"> Latest articles: </h1>
+    {{ articles(article_list) }}
+</div>
+{% endblock %}
