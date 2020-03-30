@@ -4,13 +4,13 @@
     {% block head %}
     <link rel="stylesheet" href="/static/serve/bulma.min.css" />
     <link rel="stylesheet" href="/static/serve/font-awesome.min.css" />
-    <title>{% block title %}{% endblock %} - My Webpage</title>
+    <title>{% block title %}{% endblock %} - Bias check</title>
     {% endblock %}
 </head>
 <body>
     <nav class="navbar is-transparent">
     <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
+        <a class="navbar-item" href="/">
             <span class="is-size-4 has-text-primary">Bias Check</span>
         </a>
         <div class="navbar-burger burger" data-target="navbar-coolapsable">
@@ -21,7 +21,7 @@
     </div>
     <div id="navbar-coolapsable" class="navbar-menu">
         <div class="navbar-start">
-        <a class="navbar-item" href="https://bulma.io/">
+        <a class="navbar-item" href="">
             Articles
         </a>
         </div>
@@ -40,7 +40,7 @@
                 </a>
             </p>
             <p class="control">
-                <a class="button is-danger" href="">
+                <a class="button is-danger" href="{{ url_for('user.logout') }}">
                 <span class="icon">
                     <i class="fa fa-sign-out"></i>
                 </span>
@@ -49,7 +49,7 @@
             </p>
             {% else %}
             <p class="control">
-                <a class="bd-tw-button button" href="">
+                <a class="bd-tw-button button" href="{{ url_for('authorization.login') }}">
                 <span class="icon">
                     <i class="fa fa-sign-in" aria-hidden="true"></i>
                 </span>
@@ -59,7 +59,7 @@
                 </a>
             </p>
             <p class="control">
-                <a class="button is-primary" href="">
+                <a class="button is-primary" href="{{ url_for('authorization.create') }}">
                 <span class="icon">
                     <i class="fa fa-user"></i>
                 </span>

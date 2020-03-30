@@ -1,0 +1,77 @@
+{% extends "main.jinja" %}
+{% from "form_helpers.jinja" import text_input, horizontal_input, text_input_scripts, bias_input, tag_selector, tag_selector_scripts with context %}
+{% block title %}{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="/static/serve/bulma-extensions.min.css" />
+<link rel="stylesheet" href="/static/serve/summernote-lite.min.css" />
+{{ super() }}
+{% endblock %}
+{% block content %}
+<form class="container" method="POST" enctype="multipart/form-data">
+<h1 class="title">Create new article</h1>
+{{horizontal_input(form.title, "Title", outer_classes="is-expanded", control_classes="is-expanded", input_attributes={"class": "input"})}}
+{{horizontal_input(form.source, "Source", outer_classes="is-expanded", control_classes="is-expanded", input_attributes={"class": "input", "type": "url"})}}
+<div class="field is-horizontal">
+  <div class="field-label">
+    <label class="label">Tags</label>
+  </div>
+  <div class="field-body">
+    {{tag_selector(form.tags, field_classes="is-expanded")}}
+  </div>
+</div>
+{{ bias_input(form.political_bias) }}
+{% call horizontal_input(form.source_backing, "Source backing", input_attributes={"class": "input", "step": 0.5, "max": 10, "min": 0, "value": 0, "type": "number"}) %}
+<p class="control">
+  <a class="button is-static">/ 10</a>
+</p>
+{% endcall %}
+{% call horizontal_input(form.story_choices, "Story choices", input_attributes={"class": "input", "step": 0.5, "max": 10, "min": 0, "value": 0, "type": "number"}) %}
+<p class="control">
+  <a class="button is-static">/ 10</a>
+</p>
+{% endcall %}
+{{text_input(form.analysis, "Analysis", "standalone-container")}}
+<div class="field is-horizontal">
+  <div class="field-label">
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        {{ form.submit(class="button is-primary") }}
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+<div class="dropdown">
+  <div class="dropdown-menu is-active" id="dropdown-menu" role="menu">
+    <div class="dropdown-trigger">
+    <button class="button">asdasd</button>
+    </div>
+    <div class="dropdown-content">
+      <a href="#" class="dropdown-item">
+        Dropdown item
+      </a>
+      <a class="dropdown-item">
+        Other dropdown item
+      </a>
+      <a href="#" class="dropdown-item is-active">
+        Active dropdown item
+      </a>
+      <a href="#" class="dropdown-item">
+        Other dropdown item
+      </a>
+      <hr class="dropdown-divider">
+      <a href="#" class="dropdown-item">
+        With a divider
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+{{ text_input_scripts() }}
+{{ tag_selector_scripts() }}
+<script src="/static/serve/bulma-extnsions.min.js" type="text/javascript"></script>
+{% endblock %}

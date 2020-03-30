@@ -1,0 +1,24 @@
+{% extends "main.jinja" %}
+{% from "form_helpers.jinja" import form_input with context %}
+{% block title %}Create new account{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="title has-text-black">Create account</h3>
+                <div class="box">
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
+                        {{ form_input(form.username, input_attributes={"class": "input is-medium", "placeholder": "Your Username", "autofocus": ""}) }}
+                        {{ form_input(form.email, input_attributes={"class": "input is-medium", "placeholder": "Your Email"}) }}
+                        {{ form_input(form.password, input_attributes={"class": "input is-medium", "placeholder": "Your Password"}) }}
+                        {{ form_input(form.confirm_password, input_attributes={"class": "input is-medium", "placeholder": "Repeat Password"}) }}
+                        {{form.submit(class="button is-block is-info is-large is-fullwidth is-success")}}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

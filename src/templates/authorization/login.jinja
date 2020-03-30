@@ -1,0 +1,40 @@
+{% extends "main.jinja" %}
+{% from "form_helpers.jinja" import form_input with context %}
+{% block title %}Login into account{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/serve/bulma-extensions.min.css" />
+{% endblock %}
+{% block content %}
+<section class="hero is-small">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-4 is-offset-4">
+                <h3 class="title has-text-black">Login</h3>
+                <hr class="login-hr">
+                <p class="subtitle has-text-black">Please login to proceed.</p>
+                <div class="box">
+                    <form method="POST" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
+                        {{ form_input(form.email, input_attributes={"class": "input is-large", "placeholder": "Your Email", "autofocus": ""}) }}
+                        {{ form_input(form.password, input_attributes={"class": "input is-large", "placeholder": "Your Password"}) }}
+                        {{form.submit(class="button is-block is-info is-large is-fullwidth")}}
+                    </form>
+                    <div class="is-divider" data-content="OR"></div>
+                    <a class="button is-block is-large is-fullwidth" href="{{ url_for('google.login') }}">
+                        <span class="icon"><i class="fa fa-google" aria-hidden="true"></i></span>
+                        <span>Google sign-in</span>
+                    </a>
+                </div>
+                <p class="has-text-grey">
+                    <a href="../">Forgot Password</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{# {% block scripts %}
+{{ super() }}
+<script src="/static/serve/bulma-extensions.min.js" type="text/javascript"></script>
+{% endblock %} #}

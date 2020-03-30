@@ -15,7 +15,7 @@ rated_comment = db.Table("RatedComment",
 
 class Role(db.Model):
     """ User role model """
-    role_id = db.Column(db.String(80), primary_key=True)
+    role_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False, unique=True)
     rank = db.Column(db.Integer, nullable=False)
     users = db.relationship("User", back_populates="role")
@@ -46,6 +46,7 @@ class User(db.Model):
 class Complaint(db.Model):
     """ Table for complaints on articles """
     complaint_id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
     contents = db.Column(db.Text, nullable=False)
     is_fullfilled = db.Column(db.Boolean, default=False, nullable=False)
     is_declined = db.Column(db.Boolean, default=False, nullable=False)
@@ -58,6 +59,7 @@ class Complaint(db.Model):
 class Article(db.Model):
     """ Article table """
     article_id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
     source = db.Column(db.String(200), unique=True, nullable=False)
     contents = db.Column(db.Text, nullable=False)
     analysis = db.Column(db.Text, nullable=False)

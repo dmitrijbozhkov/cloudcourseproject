@@ -1,0 +1,146 @@
+{% macro error_help(input) %}
+{% if input.errors %}
+  {% for error in input.errors -%}
+    <p class="help is-danger">{{error}}</p>
+  {%- endfor %}
+{% endif %}
+{% endmacro %}
+
+{# Input fields #}
+
+{% macro form_input(input, label="", label_classes="", input_attributes=None) %}
+{% if not input_attributes %}
+    {% set input_attributes = {} %}
+{% endif %}
+{% if input.errors %}
+    {% if "class" in input_attributes %}
+        {% do input_attributes.update({"class": input_attributes["class"] + " is-danger"}) %}
+    {% else %}
+        {% do input_attributes.update({"class": "is-danger"}) %}
+    {% endif %}
+{% endif %}
+<div class="field">
+    {% if label %}
+    <label class="{{'label ' + label_classes}}">{{label}}</label>
+    {% endif %}
+    <div class="control">
+        {{ input(**input_attributes) }}
+        {% if caller is defined %}
+        {{ caller() }}
+        {% endif %}
+    </div>
+    {{ error_help(input) }}
+</div>
+{% endmacro %}
+
+{% macro horizontal_input(input, label="", label_classes="", outer_classes="", inner_classes="", control_classes="", input_attributes=None) %}
+{% if not input_attributes %}
+    {% set input_attributes = {} %}
+{% endif %}
+{% if input.errors %}
+    {% if "class" in input_attributes %}
+        {% do input_attributes.update({"class": input_attributes["class"] + " is-danger"}) %}
+    {% else %}
+        {% do input_attributes.update({"class": "is-danger"}) %}
+    {% endif %}
+{% endif %}
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="{{ 'label ' + label_classes }}">{{label}}</label>
+  </div>
+  <div class="field-body">
+    {% if caller is defined %}
+    <div class="{{ 'field is-expanded ' + outer_classes }}">
+      <div class="{{ 'field has-addons ' + inner_classes }}">
+        <p class="{{ 'control ' + control_classes }}">
+          {{ input(**input_attributes) }}
+        </p>
+        {{ caller() }}
+      </div>
+      {{ error_help(input) }}
+    </div>
+    {% else %}
+    <div class="{{ 'field ' + outer_classes }}">
+      <div class="{{ 'control ' + inner_classes }}">
+        {{ input(**input_attributes) }}
+      </div>
+      {{ error_help(input) }}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}
+
+{# Selectors #}
+
+{% macro tag_selector(input, max_amount=-1, field_classes="", control_classes="") %}
+<div class="{{ 'field ' + field_classes }}">
+  <div class="{{ 'control ' + control_classes }}'">
+  {{input(class="input", placeholder="Search for tag...")}}
+  </div>
+  <span class="help tag is-success">
+  Bar
+  <button class="delete is-small"></button>
+  </span>
+</div>
+<div class="dropdown">
+    <div class="dropdown-trigger">
+        <input id="prova" class="input" type="text" placeholder="I ❤️ USA" aria-haspopup="true" aria-controls="prova-menu">
+    </div>
+    <div class="dropdown-menu" id="prova-menu" role="menu" />
+</div>
+{% endmacro %}
+
+{% macro tag_selector_scripts() %}
+<script src="/static/serve/bulmahead.bundle.js" type="text/javascript"></script>
+<script src="/static/serve/tags.js" type="text/javascript"></script>
+{% endmacro %}
+
+{% macro bias_input(input, input_attributes=None) %}
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">Bias</label>
+  </div>
+  <div class="field-body">
+    <div class="field is-narrow">
+      <div class="control">
+        <div class="select is-fullwidth">
+          {% if input_attributes %}
+          {{input(**input_attributes)}}
+          {% else %}
+          {{input()}}
+          {% endif %}
+        </div>
+      </div>
+      {{ error_help(input) }}
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{# Text inputs #}
+
+{% macro text_input(input, label, control_classes="") %}
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label class="label">{{label}}</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <div class="{{control_classes}}" id="editor"></div>
+        {{ input(id="editor_data") }}
+        {% if caller is defined %}
+        {{ caller() }}
+        {% endif %}
+      </div>
+      {{ error_help(input) }}
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro text_input_scripts() %}
+<script src="/static/serve/summernote-lite.min.js" type="text/javascript"></script>
+<script src="/static/serve/editor.js" type="text/javascript"></script>
+{% endmacro %}

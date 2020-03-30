@@ -75,9 +75,11 @@ def identify(token):
         raise NotAuthorizedError("User not found")
     return user
 
-def authoriza(username, password):
+def authorize(email, password):
     """ Authorize user into account """
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        raise NotAuthorizedError("User not found")
     if verify_password(user.password, password):
         return user
     raise NotAuthorizedError("Wrong password")
@@ -89,7 +91,7 @@ def _validate_user(token, role_rank, activated):
         raise NotAuthorizedError(f"User not found")
     if user.role.rank < role_rank:
         raise NotEnoughPriveleges("You can't access this resource, please contact admin")
-    if user.is_activated == activated:
+    if user.is_activated or activated:
         return user
     raise NotEnoughPriveleges("User should be authorized to access the resource")
 
@@ -102,7 +104,7 @@ def secure(role: str, acivated=True):
             token = session.get(config["SESSION_TOKEN"])
             if not token:
                 raise NotAuthorizedError("Please authorize yourself")
-            user =  _validate_user(token, rank, acivated)
+            user = _validate_user(token, rank, acivated)
             g.current_user = user
             return route(*args, **kwargs)
         return intermediate
